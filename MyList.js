@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FlatList, View, Text, SafeAreaView } from "react-native";
 import { Card, Button, Title, Paragraph } from "react-native-paper";
-
+// todo: trouble fetch data using emulator like android nexus
 const DATA = [
   {
     id: 1,
@@ -21,13 +21,19 @@ const Item = (props) => {
   return (
     <Card>
       <Card.Cover source={{ uri: props.item.avatar }} />
-      <Card.Content>
-        <Title>{props.item.first_name}</Title>
-        <Paragraph>Card content</Paragraph>
+      <Card.Content style={{ backgroundColor: "#e7e7e7" }}>
+        <Title style={{ color: "#FF9900" }}>
+          {props.item.first_name} {props.item.id}
+        </Title>
+        <Paragraph style={{ color: "#2DBFF8" }}>{props.item.email}</Paragraph>
       </Card.Content>
-      <Card.Actions>
-        <Button>Cancel</Button>
-        <Button>Ok</Button>
+      <Card.Actions style={{ backgroundColor: "#e7e7e7" }}>
+        <Button>
+          <Text style={{ color: "#000" }}>Cancel</Text>
+        </Button>
+        <Button>
+          <Text style={{ color: "#000" }}>OK</Text>
+        </Button>
       </Card.Actions>
     </Card>
   );
@@ -37,8 +43,7 @@ const Separator = () => {
   return (
     <View
       style={{
-        borderBottomWidth: 1,
-        borderBottomColor: "skyblue",
+        marginBottom: 10,
       }}
     ></View>
   );
@@ -49,21 +54,31 @@ export default function MyList() {
   const [meta, setMeta] = useState({});
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
+  const getData = () => {
     fetch(`https://reqres.in/api/users?page=${page}`)
       .then((response) => response.json())
       .then((json) => {
-        setUsers(json.data);
+        if (page > json.total_pages) {
+          return;
+        }
+        setPage(page + 1);
+        setUsers([...users, ...json.data]);
       });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   return (
-    <View style={{ margin: 40 }}>
+    <View style={{ margin: 20 }}>
+      <Text>{page}</Text>
       <FlatList
         data={users}
         renderItem={Item}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={Separator}
+        onEndReached={getData}
       />
     </View>
   );
