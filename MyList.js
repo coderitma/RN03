@@ -19,7 +19,7 @@ const DATA = [
 
 const Item = (props) => {
   return (
-    <Card>
+    <Card style={{ flex: 1, margin: 2 }}>
       <Card.Cover source={{ uri: props.item.avatar }} />
       <Card.Content style={{ backgroundColor: "#e7e7e7" }}>
         <Title style={{ color: "#FF9900" }}>
@@ -71,11 +71,11 @@ export default function MyList() {
   }, []);
 
   return (
-    <View style={{ margin: 20 }}>
-      <Text>{page}</Text>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={users}
         renderItem={Item}
+        numColumns={2}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={Separator}
         onEndReached={getData}
