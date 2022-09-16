@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import FormLogin from "./FormLogin";
 import MyList from "./MyList";
+import RouterNav from "./RouterNav";
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -22,7 +23,7 @@ export default function App() {
 
   useEffect(getData, []);
 
-  return <MyList />;
+  return <RouterNav />;
 }
 
 // const styles = StyleSheet.create({

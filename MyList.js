@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FlatList, View, Text, SafeAreaView } from "react-native";
+import { FlatList, View, Text } from "react-native";
 import { Card, Button, Title, Paragraph } from "react-native-paper";
 // todo: trouble fetch data using emulator like android nexus
 const DATA = [
@@ -18,6 +18,12 @@ const DATA = [
 ];
 
 const Item = (props) => {
+  const toProfile = (data) => {
+    props.navigation.navigate("Profile", { oncom: data });
+  };
+
+  console.log(props);
+
   return (
     <Card style={{ flex: 1, margin: 2 }}>
       <Card.Cover source={{ uri: props.item.avatar }} />
@@ -31,7 +37,7 @@ const Item = (props) => {
         <Button>
           <Text style={{ color: "#000" }}>Cancel</Text>
         </Button>
-        <Button>
+        <Button onPress={() => toProfile(props.item)}>
           <Text style={{ color: "#000" }}>OK</Text>
         </Button>
       </Card.Actions>
@@ -49,7 +55,7 @@ const Separator = () => {
   );
 };
 
-export default function MyList() {
+export default function MyList(props) {
   const [page, setPage] = useState(1);
   const [meta, setMeta] = useState({});
   const [users, setUsers] = useState([]);
@@ -71,10 +77,13 @@ export default function MyList() {
   }, []);
 
   return (
+    // ({ item }) => <Render_Item name={item.name} />
     <View style={{ flex: 1 }}>
       <FlatList
         data={users}
-        renderItem={Item}
+        renderItem={({ item }) => (
+          <Item navigation={props.navigation} item={item} />
+        )}
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={Separator}
