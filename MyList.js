@@ -22,8 +22,6 @@ const Item = (props) => {
     props.navigation.navigate("Profile", { oncom: data });
   };
 
-  console.log(props);
-
   return (
     <Card style={{ flex: 1, margin: 2 }}>
       <Card.Cover source={{ uri: props.item.avatar }} />

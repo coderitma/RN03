@@ -8,13 +8,16 @@ const Stack = createNativeStackNavigator();
 export default function RouterNav() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Stack.Screen
           name="MyList"
           component={MyList}
           options={{
             title: "Home",
-            headerShown: false,
           }}
         />
         <Stack.Screen name="Profile" component={Profile} />
