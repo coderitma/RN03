@@ -8,8 +8,11 @@ import {
   PixelRatio,
   Button,
 } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FormLogin from "./FormLogin";
 import MyList from "./MyList";
+import RouterApp from "./RouterApp";
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -22,7 +25,7 @@ export default function App() {
 
   useEffect(getData, []);
 
-  return <MyList />;
+  return <RouterApp />;
 }
 
 // const styles = StyleSheet.create({
